@@ -1,4 +1,4 @@
-# CEN3031-group22
+# SunSpot
 
 Member1:  Hunter Lawson  
 Member2:  Tiffany Wu  
