@@ -1,3 +1,6 @@
 # CEN3031-group22
 
-project name tbd
+Member1: 
+Member2: 
+Member3: 
+Member4: 
