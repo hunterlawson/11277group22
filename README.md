@@ -1,4 +1,4 @@
-# SunSpot
+# 11277group22
 
 Member1:  Hunter Lawson  
 Member2:  Tiffany Wu  
