@@ -3,21 +3,24 @@ from flask import Flask, render_template, url_for
 app = Flask(__name__)
 
 @app.route('/')
-@app.route('/home')
 def home():
-    return render_template('homePage.html', title='Home')
+    return render_template('home.html', title='SunSpot - Home')
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', title='SunSpot - About')
 
 @app.route('/login')
 def login():
-    return "This is the login page"
+    return render_template('login.html', title='SunSpot - Login')
 
-@app.route('/app')
-def app():
-    return "This is the app page"
+@app.route('/application')
+def application():
+    return render_template('application.html', title='SunSpot - App')
+
+@app.route('/bookmarks')
+def bookmarks():
+    return render_template('bookmarks.html', title='SunSpot - Bookmarks')
 
 if __name__ == '__main__':
     app.run(debug=True)

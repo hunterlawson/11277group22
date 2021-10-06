@@ -15,7 +15,7 @@
 <body>
 <nav class="navbar navbar-expand navbar-dark" style="background-color: #FFAE42;">
   <div class="container" style="padding-top: 7px; padding-bottom: 7px">
-      <a class="navbar-brand" href="/home">
+      <a class="navbar-brand" href="{{ url_for('home') }}">
       <img src="https://cdn.mos.cms.futurecdn.net/FxHkyv4XaJP8jZYmMzMogh.jpg" alt="" width="30" height="24" class="d-inline-block align-text-top">
       SUNSPOT
       </a>
@@ -25,7 +25,7 @@
                   <a href="{{ url_for('about') }}" class="nav-link active">About</a>
               </li>
               <li class="nav-itm">
-                  <a href="{{ url_for('app') }}" class="nav-link active">Go to App</a>
+                  <a href="{{ url_for('application') }}" class="nav-link active">Go to App</a>
               </li>
               <li class="nav-itm">
                   <a href="{{ url_for('login') }}" class="nav-link active">Log in</a>
@@ -33,7 +33,7 @@
               <li class="nav-item dropdown">
                   <a class="nav-link active dropdown-toggle" href="#profile" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Profile</a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#bookmarks">Bookmarks</a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('bookmarks') }}">Bookmarks</a></li>
                   </ul>
               </li>
           </ul>
