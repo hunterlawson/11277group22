@@ -11,5 +11,13 @@ def home():
 def about():
     return render_template('about.html')
 
+@app.route('/login')
+def login():
+    return "This is the login page"
+
+@app.route('/app')
+def app():
+    return "This is the app page"
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homePage.css') }}">
 
-
     {% if title %}
         <title>{{title}}</title>
     {% else %}
@@ -23,20 +22,20 @@
       <div class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto">
               <li class="nav-itm">
-                  <a href="/about" class="nav-link active">About</a>
+                  <a href="{{ url_for('about') }}" class="nav-link active">About</a>
               </li>
               <li class="nav-itm">
-                  <a href="#gotoapp" class="nav-link active">Go to App</a>
+                  <a href="{{ url_for('app') }}" class="nav-link active">Go to App</a>
               </li>
               <li class="nav-itm">
-                  <a href="#login" class="nav-link active">Log in</a>
+                  <a href="{{ url_for('login') }}" class="nav-link active">Log in</a>
               </li>
               <li class="nav-item dropdown">
                   <a class="nav-link active dropdown-toggle" href="#profile" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Profile</a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="#bookmarks">Bookmarks</a></li>
-          </ul>
-        </li>
+                  </ul>
+              </li>
           </ul>
       </div>
   </div>
@@ -47,7 +46,6 @@
 <footer class="p-5 bg-light text-dark text-center position-relative">
     <div class="container">
         <p class="lead">Copyright &copy; CEN3031 Group 22</p>
-        <a
     </div>
 </footer>
 
