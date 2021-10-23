@@ -1,4 +1,9 @@
 from flask import Flask, render_template, url_for
+from pymongo import MongoClient
+
+MONGO_URI = 'mongodb://localhost:27017'
+db_client = MongoClient(MONGO_URI) # Connect to the local server
+db = db_client.sunspot # Open the SunSpot database
 
 app = Flask(__name__)
 

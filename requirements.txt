@@ -1,2 +1,4 @@
-pytest
 flask
+pytest
+pymongo
+passlib
