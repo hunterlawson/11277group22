@@ -1,2 +1,6 @@
-pytest
 flask
+pytest
+pymongo
+passlib
+flask-wtf
+email_validator

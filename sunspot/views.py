@@ -1,6 +1,6 @@
-from flask import Flask, render_template, url_for
-
-app = Flask(__name__)
+from flask import render_template
+from sunspot import app
+from sunspot.forms import RegistrationForm, LoginForm
 
 @app.route('/')
 def home():
@@ -10,9 +10,15 @@ def home():
 def about():
     return render_template('about.html', title='SunSpot - About')
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
-    return render_template('login.html', title='SunSpot - Login')
+    form = LoginForm()
+    return render_template('login.html', title='SunSpot - Login', form=form)
+
+@app.route('/register', methods=['GET','POST'])
+def register():
+    form = RegistrationForm()
+    return render_template('register.html', title='SunSpot - Register', form=form)
 
 @app.route('/application')
 def application():
@@ -21,6 +27,3 @@ def application():
 @app.route('/bookmarks')
 def bookmarks():
     return render_template('bookmarks.html', title='SunSpot - Bookmarks')
-
-if __name__ == '__main__':
-    app.run(debug=True)

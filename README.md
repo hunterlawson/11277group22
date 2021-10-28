@@ -18,6 +18,22 @@ This makes a virtual environment named 'env'
 This starts the virtual environment.
 3. You should see (env) in front of your console. Now you can install the project requirements. Run: `pip install -r requirements.txt`
 
+## Installing MongoDB
+(This also only needs to be done once)
+
+MongoDB is the database for this application. When you download MongoDB, you're really just downloading a server that hosts your databases for you. If you're doing development on the app that involves using the database, you need to have a local server to test things with.
+
+1. Download the [MongoDB server](https://www.mongodb.com/try/download/community)
+2. Accept all of the install options and install it
+
+The server should now be running, but for some reason it's also set to run automatically on startup. It uses like 100mb of ram so that's not good. You can turn this off by:
+
+1. Open Task Manager
+2. Go to the Services tab
+3. Find the `MongoDB` service, right click on it and click on 'Open Services'
+4. Now right click on the MongoDB service, click properties, and change the startup type to manual
+5. Now if you want to launch the server, find it in the task manager, and start it there
+
 ## Making a change
 
 1. Ensure that your virtual environment is enabled (run the env/Scripts/activate.bat file)
