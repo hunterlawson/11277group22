@@ -34,12 +34,13 @@ jobs:
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
-      - run:
-          name: Install MongoDB
-          command: |
-            sudo apt-get install -y mongodb
       - python/install-packages:
           pkg-manager: pip
+      - run:
+          name: Setup MongoDB
+          command: |
+            sudo mkdir /data/db
+            sudo mongod
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
