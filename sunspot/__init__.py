@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Set the Flask secret key, which is used for things like authenticating
 # the forms and for user authentication
-app.config['SECRET_KEY'] = environ.get('SUNSPOT_SECRET_KEY')
+app.config['SECRET_KEY'] = '123'
 
 MONGO_URI = environ.get('SUNSPOT_MONGO_URI')
 if MONGO_URI == None:
