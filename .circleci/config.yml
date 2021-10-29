@@ -24,6 +24,7 @@ jobs:
     # Change the version below to your required version of python
     docker:
       - image: cimg/python:3.8
+        command: sudo mkdir -p /data/db
       - image: circleci/mongo:5.0.3-focal
     environment:
         PYTHONPATH: /home/circleci/project
@@ -36,11 +37,6 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      - run:
-          name: Setup MongoDB
-          command: |
-            sudo mkdir -p /data/db
-            sudo mongod
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
