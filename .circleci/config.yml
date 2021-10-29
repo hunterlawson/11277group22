@@ -39,7 +39,7 @@ jobs:
       - run:
           name: Setup MongoDB
           command: |
-            sudo mkdir /data/db
+            sudo mkdir -p /data/db
             sudo mongod
       - run:
           name: Run tests
