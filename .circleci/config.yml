@@ -24,7 +24,6 @@ jobs:
     # Change the version below to your required version of python
     docker:
       - image: cimg/python:3.8
-        command: docker run sudo mkdir -p /data/db
       - image: circleci/mongo:5.0.3
     environment:
         PYTHONPATH: /home/circleci/project
