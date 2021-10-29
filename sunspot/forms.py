@@ -6,19 +6,18 @@ from wtforms.validators import DataRequired, Length, Regexp, Email, EqualTo
 #   username: 4-20 characters
 #   password: at least 8 alphanumeric characters with 1 or more symbols
 #   email:
-username_message = 'Only alphanumeric characters and \'_\' are allowed.'
-email_message = 'Must be a valid email.'
-pw_message = 'The passwords must match.'
+register_username_message = 'Only alphanumeric characters and \'_\' are allowed.'
+register_pw_message = 'The passwords must match.'
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Regexp(r'\w', message=username_message), Length(min=4, max=20)])
-    email = StringField('Email', validators=[DataRequired(), Email(message=email_message)])
+    username = StringField('Username', validators=[DataRequired(), Regexp(r'^[\w._]+$', message=register_username_message), Length(min=4, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
-    password_confirm = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message=pw_message)])
+    password_confirm = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message=register_pw_message)])
     submit = SubmitField('Sign Up')
     
-# Login form:    
+# Login form:
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email(message=email_message)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
