@@ -24,8 +24,8 @@ jobs:
     # Change the version below to your required version of python
     docker:
       - image: cimg/python:3.8
-        command: sudo mkdir -p /data/db
-      - image: circleci/mongo:5.0.3-focal
+        command: docker run sudo mkdir -p /data/db
+      - image: circleci/mongo:5.0.3
     environment:
         PYTHONPATH: /home/circleci/project
     # Checkout the code as the first step. This is a dedicated CircleCI step.
@@ -34,6 +34,11 @@ jobs:
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
+      - run:
+          name: Setup MongoDB
+          command: |
+            sudo mkdir -p /data/db
+            mongo
       - checkout
       - python/install-packages:
           pkg-manager: pip
