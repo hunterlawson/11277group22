@@ -11,24 +11,60 @@
             <form method="POST" action="">
                 {{ form.csrf_token }}
                 <div class="txt_field">
-                    {{ form.username(class='form-control form-control-lg') }}
+                    {% if form.username.errors %}
+                        {{ form.username(class='form-control form-control-lg is-invalid') }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class='form-control form-control-lg') }}
+                    {% endif %}
                     <span></span>
-                    <label>Username</label>
+                    {{ form.username.label }}
                 </div>
                 <div class="txt_field">
+                    {% if form.email.errors %}
+                    {{ form.email(class='form-control form-control-lg is-invalid') }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
                     {{ form.email(class='form-control form-control-lg') }}
+                {% endif %}
                     <span></span>
-                    <label>Email</label>
+                    {{ form.email.label }}
                 </div>
                 <div class="txt_field">
+                    {% if form.password.errors %}
+                    {{ form.password(class='form-control form-control-lg is-invalid') }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
                     {{ form.password(class='form-control form-control-lg') }}
+                {% endif %}
                     <span></span>
-                    <label>Password</label>
+                    {{ form.password.label }}
                 </div>
                 <div class="txt_field">
+                    {% if form.password_confirm.errors %}
+                    {{ form.password_confirm(class='form-control form-control-lg is-invalid') }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password_confirm.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
                     {{ form.password_confirm(class='form-control form-control-lg') }}
+                {% endif %}
                     <span></span>
-                    <label>Confirm Password</label>
+                    {{ form.password_confirm.label }}
                 </div>
                 {{ form.submit(style="margin-bottom: 30px;") }}
             </form>
