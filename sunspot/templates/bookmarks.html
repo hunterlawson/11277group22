@@ -1,14 +1,87 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<style>
+    .box{
+        border: 5px solid orange;
+        border-radius: 7px;
+        height: 100%;
+        display: flex;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+    .frame{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card{
+        border-radius: 10px;
+        margin:1%;
+        background-color: #FFAE42;
+        border-radius: 7px;
+        padding: 5px;
+        color: white;
+        flex: 0 0 31.333%;
+    }
+</style>
 <section class="text-dark p-5 text-center text-sm-start" style="background-color: white">
     <div class="container">
         <div class="d-flex align-items-center justify-content-between">
             <div>
                 <h1>Bookmarks</h1>
-                <p class="lead my-3">
-                    This will be the bookmarks page
-                </p>
+            </div>
+        </div>
+        <div class="frame">
+            <div class="card">
+                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
+            style="border-radius: 7px;">
+                <h1>Bookmark1</h1>
+                <h2>location</h2>
+                <h2>position</h2>
+                <h2>cost</h2>
+                <br>
+                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
+            </div>
+            <div class="card">
+                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
+                style="border-radius: 7px;">
+                <h1>Bookmark2</h1>
+                <h2>location</h2>
+                <h2>position</h2>
+                <h2>cost</h2>
+                <br>
+                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
+            </div>
+            <div class="card">
+                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
+                style="border-radius: 7px;">
+                <h1>Bookmark3</h1>
+                <h2>location</h2>
+                <h2>position</h2>
+                <h2>cost</h2>
+                <br>
+                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
+            </div>
+            <div class="card">
+                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
+                style="border-radius: 7px;">
+                <h1>Bookmark4</h1>
+                <h2>location</h2>
+                <h2>position</h2>
+                <h2>cost</h2>
+                <br>
+                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
+            </div>
+            <div class="card">
+                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
+                style="border-radius: 7px;">
+                <h1>Bookmark5</h1>
+                <h2>location</h2>
+                <h2>position</h2>
+                <h2>cost</h2>
+                <br>
+                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
             </div>
         </div>
     </div>
