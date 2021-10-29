@@ -5,16 +5,32 @@
     <div class="container">
         <div class="d-flex align-items-center justify-content-between">
             <div>
-                <h1>Introduction</h1>
+                <h1>What is <i>SunSpot</i>?</h1>
                 <p class="lead my-3">
-                    Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power
-                    Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power
-                    Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power Solar power
+                    Simply put, <i>SunSpot</i> generates accurate regional maps for building solar panels.
+                    </br></br>
+                    As a web application designed to utilize multiple API metrics and recorded data, 
+                    <i>SunSpot</i> aims to provide the most optimal locations for solar energy farms in the state of Florida.
+                    With <i>SunSpot</i>, users can browse through a variety of locations and bookmark for future references.
+                    Furthermore, <i>SunSpot</i> also serves as a hub that provides helpful general resources for users of all 
+                    backgrounds and experience to better understand solar panels.
                 </p>
             </div>
         </div>
     </div>
 </section>
+
+<!-- API Links CSS -->
+<style>
+    a:link {
+        color:white;
+    }
+
+    a:visited {
+        color:white;
+    }
+
+</style>
 
 <!-- Boxes -->
 <section class="p-5">
@@ -23,9 +39,9 @@
             <div class="col">
                 <div class="card text-light" style="background-color: #FFAE42">
                     <div class="card-body text-center">
-                        <h3 class="card-title mb-3">API Source 1</h3>
+                        <h3 class="card-title mb-3"><a href="https://openweathermap.org/" target="_blank">OpenWeather API</a></h3>
                         <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi.
+                            OpenWeather provides both historical and up-to-date weather data for any coordinates in the world.
                         </p>
                     </div>
                 </div>
@@ -33,9 +49,9 @@
             <div class="col">
                 <div class="card text-light" style="background-color: #FFAE42">
                     <div class="card-body text-center">
-                        <h3 class="card-title mb-3">API Source 2</h3>
+                        <h3 class="card-title mb-3"><a href="https://solcast.com/solar-radiation-data/" target="_blank">Solcast API</a></h3>
                         <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi.
+                            Solcast focuses on identifying weather forecast data that relates to solar power assets.
                         </p>
                     </div>
                 </div>
@@ -43,10 +59,9 @@
             <div class="col">
                 <div class="card text-light" style="background-color: #FFAE42">
                     <div class="card-body text-center">
-                        <h3 class="card-title mb-3">API Source 3</h3>
+                        <h3 class="card-title mb-3"><a href="https://developers.google.com/maps" target="blank_">Google Maps API</a></h3>
                         <p class="card-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi.
+                            Google Maps assists in creating real-time maps for a variety of purposes.
                         </p>
                     </div>
                 </div>
@@ -63,14 +78,14 @@
                 <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg" class="img-fluid" width="580" height="435"  alt=""/>
             </div>
             <div class="col p-5">
-                <h2>Target Audience</h2>
+                <h2>Who Should Use <i>SunSpot</i>?</h2>
                 <p class="lead">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Rhoncus mattis rhoncus urna neque viverra justo. Neque laoreet suspendisse
-                    interdum consectetur libero id faucibus nisl. </p>
-                <p class="lead"> ornare massa. Sit amet risus nullam eget. Et netus et malesuada fames ac turpis.
-                    Parturient montes nascetur ridiculus mus mauris vitae ultricies leo. Sociis natoque penatibus et
-                    magnis dis parturient montes nascetur.
+                    <i>SunSpot</i> encourages anyone — personal, municipal, private — to consider utilizing solar energy farms.
+                    Users would be able to determine to most suitable areas for building solar farms that would generate the most
+                    efficient yield of energy.</p>
+                <p class="lead"> Across the state of Florida, there are acres of unused land that could be converted into potential 
+                    photovoltaic resources. With the help of <i>SunSpot</i>, even residential individuals with large expanses of private 
+                    property could discern the best locations for personal solar panels.
                 </p>
             </div>
         </div>
@@ -90,6 +105,9 @@
                 <canvas id="myChart2" width="200px" height="200px"></canvas>
             </div>
         </div>
+
+
+
     </div>
 </section>
 
@@ -98,10 +116,10 @@
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Solar Power [gigawatts]',
+                data: [1400, 1600, 1760, 1990, 2200, 2400],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -130,7 +148,7 @@
             plugins: {
             title: {
                 display: true,
-                text: 'Increase in solar voltaic farms',
+                text: 'Projected Future Solar Energy Power Capacity (IEA)',
                 padding: {
                     bottom: 30,
                 },
@@ -146,10 +164,10 @@
     const myChart2 = new Chart(ctx1, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['1995', '2000', '2005', '2010', '2015', '2020'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Average USD (2015) per Watt',
+                data: [6, 5, 4.4, 2.1, 0.8, 0.2],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -178,7 +196,7 @@
             plugins: {
             title: {
                 display: true,
-                text: 'Power generated vs $ saved',
+                text: 'Cost of Solar Panels Throughout the Years (IEA)',
                 padding: {
                     bottom: 30,
                 },
