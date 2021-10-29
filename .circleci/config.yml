@@ -24,7 +24,6 @@ jobs:
     # Change the version below to your required version of python
     docker:
       - image: cimg/python:3.8
-      - image: circleci/mongo:5.0.3
     environment:
         PYTHONPATH: /home/circleci/project
     # Checkout the code as the first step. This is a dedicated CircleCI step.
@@ -33,15 +32,6 @@ jobs:
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
-      - run:
-          name: Setup MongoDB
-          command: |
-            wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
-            echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-            sudo apt-get update
-            sudo apt-get install -y mongodb-org
-            sudo mkdir -p /data/db
-            sudo service mongod start
       - checkout
       - python/install-packages:
           pkg-manager: pip
