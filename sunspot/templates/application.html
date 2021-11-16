@@ -1,49 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SunSpot - Web Application</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<!-- CODE REFERENCE USED:
-    Bryce St. Pierre
-    Traversy Media
-    CodeXWorld
-    Coding with Leif
--->
-<body>
+    <!-- CODE REFERENCE USED:
+        Bryce St. Pierre
+        Traversy Media
+        CodeXWorld
+        Coding with Leif
+    -->
+    <body>
     <!-- Set-Up for (1) Location Searchbar, (2) Map, (3) Geo-Data -->
-    <div class="main-container">
+    <div class="container">
         <div class="row">
             <div class="col">
-                <input id="search" class="form-control" type="text" placeholder="Search for a new location..." />
+                <input id="search" class="form-control" type="text" placeholder="Search for a new location..."/>
             </div>
         </div>
-    <div class="row">
-        <div class="col">
-            <div id="map"></div>
+        <div class="row">
+            <div class="col">
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="geometry">
+                <!--<ul class="geodata">
+                    <li>Latitude: <span id="lat_out"></span></li>
+                    <li>Longitude: <span id="lng_out"></span></li>
+                </ul>-->
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <ul class="geodata">
-                <li>Latitude: <span id="lat_out"></span></li>
-                <li>Longitude: <span id="lng_out"></span></li>
-            </ul>
-        </div>
-    </div>
-  </div>
- 
- <!-- API Script for Google Map -->
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- API Script for Google Map -->
     <script>
         var map;
-        
+
         // Initialize Google Map function.
-        function initMap () {
+        function initMap() {
             // Setting default values to UF coordinates.
             var options = {
-                center: { lat: 29.643, lng: -82.354 },
+                center: {lat: 29.643, lng: -82.354},
                 zoom: 14
             };
 
@@ -53,13 +49,13 @@
             // Ask user for geolocation (current location).
             // User has the option to allow or decline.
             // If user declines or if location is not found, default to UF coordinates.
-            if (navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(function(pos){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (pos) {
                     var position = {
                         lat: pos.coords.latitude,
                         lng: pos.coords.longitude
                     }
-                     // Add initial marker.
+                    // Add initial marker.
                     var marker = new google.maps.Marker({
                         lat: pos.coords.latitude,
                         lng: pos.coords.longitude,
@@ -69,18 +65,17 @@
                     infowindow.setPosition(position);
                     infowindow.setContent('Current location.');
                     infowindow.open(map);
-                    
-                }, function(){
+
+                }, function () {
                     handleLocationError('Geolocation failure.', map.center());
-                        // Add initial marker.
-                        var marker = new google.maps.Marker({
-                            lat: 29.643,
-                            lng: -82.354,
-                            map: map
-                        });
+                    // Add initial marker.
+                    var marker = new google.maps.Marker({
+                        lat: 29.643,
+                        lng: -82.354,
+                        map: map
+                    });
                 })
-            }
-            else {
+            } else {
                 handleLocationError('No valid geolocation found.', map.center());
                 // Add initial marker.
                 var marker = new google.maps.Marker({
@@ -94,7 +89,7 @@
             var input = document.getElementById('search');
             var searchBox = new google.maps.places.SearchBox(input);
 
-            map.addListener('bounds_changed', function() {
+            map.addListener('bounds_changed', function () {
                 searchBox.setBounds(map.getBounds());
             });
 
@@ -104,16 +99,18 @@
                 var places = searchBox.getPlaces();
 
                 // If input isn't a valid place.
-                if (places.length == 0){
+                if (places.length == 0) {
                     return;
                 }
                 // Reset marker.
-                markers.forEach(function (m) { m.setMap(null); });
+                markers.forEach(function (m) {
+                    m.setMap(null);
+                });
                 markers = [];
 
                 var bounds = new google.maps.LatLngBounds();
-                places.forEach(function(p) {
-                    if (!p.geometry){
+                places.forEach(function (p) {
+                    if (!p.geometry) {
                         return;
                     }
                     markers.push(new google.maps.Marker({
@@ -122,23 +119,55 @@
                         position: p.geometry.location
                     }));
 
-                    if (p.geometry.viewport){
+                    if (p.geometry.viewport) {
                         bounds.union(p.geometry.viewport);
-                    }
-                    else {
+                    } else {
                         bounds.extend(p.geometry.location);
                     }
                 });
                 // Update bounds to map.
                 map.fitBounds(bounds);
 
-                // NEEDS FIX: For geolocation data to be outputted into body of HTML file.
+                // For geolocation data to be outputted into body of HTML file.
                 var geoplace = searchBox.getPlaces();
-                document.getElementById('lat_out').innerHTML = geoplace.geometry.location.lat();
-                document.getElementById('lng_out').innerHTML = geoplace.geometry.location.lng();
+                console.log(input.value);
+                //document.getElementById('lat_out').innerHTML = input.value.geometry.location.lat();
+                //document.getElementById('lng_out').innerHTML = input.value.geometry.location.lng();
+
+                //geolocation API, use input.value
+                var geolocation = input.value;
+                axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                    params: {
+                        address: geolocation,
+                        key: 'AIzaSyDx9BeRyEXjOwbaPxuqYJLdnQMF2u1x36c'
+                    }
+                })
+                    //error catching.
+                    .then(function (response) {
+                        //logging full responses of locations.
+                        console.log(response);
+
+                        //PROVIDES: lat/long data. geometry data.
+                        var lat = response.data.results[0].geometry.location.lat;
+                        var lng = response.data.results[0].geometry.location.lng;
+                        //console.log(lat);
+                        console.log(lng);
+                        var geometry_out = `
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
+                            <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
+                    `;
+
+                        //output data retrieved from geocode to html body div.
+                        document.getElementById('geometry').innerHTML = geometry_out;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
             });
-        }; 
-        
+        };
+
         // Asking user for geolocation fall-back function.
         function handleLocationError(content, position) {
             infowindow.setPosition(position);
@@ -147,23 +176,18 @@
         }
     </script>
 
-<!-- API for Google Maps and Places-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx9BeRyEXjOwbaPxuqYJLdnQMF2u1x36c&callback=initMap&libraries=places" async defer></script>
+    <!-- API for Google Maps and Places-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx9BeRyEXjOwbaPxuqYJLdnQMF2u1x36c&callback=initMap&libraries=places"
+            async defer></script>
 
-<style>
-    #map {
-        height: 700px;
-        width: 1890px;
-        margin: 0;
-        padding: 0;
-    }
-    html, body {
-        height: 100%;
-    }
-</style>
-</body>
-</html>
+    <style>
+        #map {
+            height: 70vh;
+            width: auto;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    </body>
 
-
-
-
+{% endblock content %}
