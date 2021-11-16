@@ -12,8 +12,6 @@
         <div class="row">
             <div class="col">
                 <input id="search" class="form-control" type="text" placeholder="Search for a new location..." />
-                <input type="hidden" id="latitude_in" />
-                <input type="hidden" id="longitude_in" />
             </div>
         </div>
     <div class="row">
@@ -24,8 +22,8 @@
     <div class="row">
         <div class="col">
             <ul class="geodata">
-                <li>Latitude: <span id="lat"></span></li>
-                <li>Longitude: <span id="lng"></span></li>
+                <li>Latitude: <span id="lat_out"></span></li>
+                <li>Longitude: <span id="lng_out"></span></li>
             </ul>
         </div>
     </div>
@@ -57,29 +55,23 @@
                     infowindow.setContent('Current location.');
                     infowindow.open(map);
                 }, function(){
-                    handleLocationError('Geolocation failure.', map.center());
+                    handleLocationError('Geolocation failure.', map.center);
                 })
             }
             else {
-                handleLocationError('No valid geolocation found.', map.center());
+                handleLocationError('No valid geolocation found.', map.center);
             }
 
             // Set input to equal user search text.
             var input = document.getElementById('search');
             var searchBox = new google.maps.places.SearchBox(input);
             map.addListener('bounds_changed', function() {
-            searchBox.setBounds(map.getBounds());
+                searchBox.setBounds(map.getBounds());
             });
 
             var markers = [];
             searchBox.addListener('places_changed', function () {
                 var places = searchBox.getPlaces();
-
-                // For geolocation data.
-                //document.getElementById('latitude_in').value = places.geometry.location.lat();
-                //document.getElementById('longitude_in').value = places.geometry.location.lng();
-                //document.getElementById('lat').innerHTML = places.geometry.location.lat();
-                //document.getElementById('lng').innerHTML = places.geometry.location.lng();
 
                 // If input isn't a valid place.
                 if (places.length == 0){
@@ -109,8 +101,12 @@
                 });
                 // Update bounds to map.
                 map.fitBounds(bounds);
+
+                // For geolocation data.
+                document.getElementById('lat_out').innerHTML = places.geometry.location.lat();
+                document.getElementById('lng_out').innerHTML = places.geometry.location.lng();
             });
-        } 
+        }; 
         
         // Asking user for geolocation.
         function handleLocationError(content, position) {
