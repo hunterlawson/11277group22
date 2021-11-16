@@ -45,14 +45,15 @@ def register():
     
     return render_template('register.html', title='SunSpot - Register', form=form)
 
-@app.route('/application')
+@app.route('/search')
 def application():
-    return render_template('application.html', title='SunSpot - App')
+    return render_template('search.html', title='SunSpot - Search')
 
 @app.route('/bookmarks')
 def bookmarks():
     return render_template('bookmarks.html', title='SunSpot - Bookmarks')
 
-@app.route('/webapp')
+@app.route('/application')
 def webapp():
-    return render_template('webapp.html', title='SunSpot - Web Application')
+    return render_template('application.html', title='SunSpot - Web Application')
+

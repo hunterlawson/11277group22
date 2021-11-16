@@ -1,19 +1,168 @@
 
-{% extends "layout.html" %}
-{% block content %}
-
-<section class="text-dark p-5 text-center text-sm-start" style="background-color: white">
-    <div class="container">
-        <div class="d-flex align-items-center justify-content-between">
-            <div>
-                <h1>Application</h1>
-                <p class="lead my-3">
-                    This will be the main application page
-                    <a href="webapp">Test Redirect to WebApp</a>
-                </p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<!-- CODE REFERENCE USED:
+    Bryce St. Pierre
+    Traversy Media
+    CodeXWorld
+    Coding with Leif
+-->
+<body>
+    <!-- Set-Up for (1) Location Searchbar, (2) Map, (3) Geo-Data -->
+    <div class="main-container">
+        <div class="row">
+            <div class="col">
+                <input id="search" class="form-control" type="text" placeholder="Search for a new location..." />
             </div>
         </div>
+    <div class="row">
+        <div class="col">
+            <div id="map"></div>
+        </div>
     </div>
-</section>
+    <div class="row">
+        <div class="col">
+            <ul class="geodata">
+                <li>Latitude: <span id="lat_out"></span></li>
+                <li>Longitude: <span id="lng_out"></span></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+ 
+ <!-- API Script for Google Map -->
+    <script>
+        var map;
+        
+        // Initialize Google Map function.
+        function initMap () {
+            // Setting default values to UF coordinates.
+            var options = {
+                center: { lat: 29.643, lng: -82.354 },
+                zoom: 14
+            };
 
-{% endblock %}
+            map = new google.maps.Map(document.getElementById('map'), options);
+
+            infowindow = new google.maps.InfoWindow;
+            // Ask user for geolocation (current location).
+            // User has the option to allow or decline.
+            // If user declines or if location is not found, default to UF coordinates.
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(pos){
+                    var position = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    }
+                     // Add initial marker.
+                    var marker = new google.maps.Marker({
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude,
+                        map: map
+                    });
+
+                    infowindow.setPosition(position);
+                    infowindow.setContent('Current location.');
+                    infowindow.open(map);
+                    
+                }, function(){
+                    handleLocationError('Geolocation failure.', map.center());
+                        // Add initial marker.
+                        var marker = new google.maps.Marker({
+                            lat: 29.643,
+                            lng: -82.354,
+                            map: map
+                        });
+                })
+            }
+            else {
+                handleLocationError('No valid geolocation found.', map.center());
+                // Add initial marker.
+                var marker = new google.maps.Marker({
+                    lat: 29.643,
+                    lng: -82.354,
+                    map: map
+                });
+            }
+
+            // Set input variable to equal the search text inputted by the user.
+            var input = document.getElementById('search');
+            var searchBox = new google.maps.places.SearchBox(input);
+
+            map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            // Create listener event function for search bar to update the map.
+            searchBox.addListener('places_changed', function () {
+                var places = searchBox.getPlaces();
+
+                // If input isn't a valid place.
+                if (places.length == 0){
+                    return;
+                }
+                // Reset marker.
+                markers.forEach(function (m) { m.setMap(null); });
+                markers = [];
+
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(p) {
+                    if (!p.geometry){
+                        return;
+                    }
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        title: p.name,
+                        position: p.geometry.location
+                    }));
+
+                    if (p.geometry.viewport){
+                        bounds.union(p.geometry.viewport);
+                    }
+                    else {
+                        bounds.extend(p.geometry.location);
+                    }
+                });
+                // Update bounds to map.
+                map.fitBounds(bounds);
+
+                // NEEDS FIX: For geolocation data to be outputted into body of HTML file.
+                var geoplace = searchBox.getPlaces();
+                document.getElementById('lat_out').innerHTML = geoplace.geometry.location.lat();
+                document.getElementById('lng_out').innerHTML = geoplace.geometry.location.lng();
+            });
+        }; 
+        
+        // Asking user for geolocation fall-back function.
+        function handleLocationError(content, position) {
+            infowindow.setPosition(position);
+            infowindow.setContent(content);
+            infowindow.open(map);
+        }
+    </script>
+
+<!-- API for Google Maps and Places-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx9BeRyEXjOwbaPxuqYJLdnQMF2u1x36c&callback=initMap&libraries=places" async defer></script>
+
+<style>
+    #map {
+        height: 700px;
+        width: 1890px;
+        margin: 0;
+        padding: 0;
+    }
+    html, body {
+        height: 100%;
+    }
+</style>
+</body>
+</html>
+
+
+
+
