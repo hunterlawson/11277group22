@@ -19,10 +19,10 @@ def test_about():
 #     assert b'SunSpot - App' in r.data
 #     assert r.status_code == 200
 
-def test_search():
-    r = client.get('/search')
-    assert b'SunSpot - Search' in r.data
-    assert r.status_code == 200
+# def test_search():
+#     r = client.get('/search')
+#     assert b'SunSpot - Search' in r.data
+#     assert r.status_code == 200
 
 def test_application():
     r = client.get('/application')
