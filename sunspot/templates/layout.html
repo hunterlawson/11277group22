@@ -22,21 +22,27 @@
       </a>
       <div class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto">
-              <li class="nav-itm">
-                  <a href="{{ url_for('about') }}" class="nav-link active">About</a>
-              </li>
-              <li class="nav-itm">
-                  <a href="{{ url_for('application') }}" class="nav-link active">Go to App</a>
-              </li>
-              <li class="nav-itm">
-                  <a href="{{ url_for('login') }}" class="nav-link active">Log in</a>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link active dropdown-toggle" href="#profile" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Profile</a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="{{ url_for('bookmarks') }}">Bookmarks</a></li>
-                  </ul>
-              </li>
+              {% if current_user.is_authenticated %}
+                <li class="nav-itm">
+                    <a href="{{ url_for('about') }}" class="nav-link active">About</a>
+                </li>
+                <li class="nav-itm">
+                    <a href="{{ url_for('application') }}" class="nav-link active">Go to App</a>
+                </li>
+                <li class="nav-itm">
+                    <a href="{{ url_for('logout') }}" class="nav-link active">Logout</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#profile" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Profile</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('bookmarks') }}">Bookmarks</a></li>
+                    </ul>
+                </li>
+              {% else %}
+                <li class="nav-itm">
+                    <a href="{{ url_for('login') }}" class="nav-link active">Login/Register</a>
+                </li>
+              {% endif %}
           </ul>
       </div>
   </div>
@@ -45,7 +51,7 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
+            <div class="alert alert-{{ category }}", style="margin-bottom: 0;">
                 {{ message }}
             </div>
         {% endfor %}
