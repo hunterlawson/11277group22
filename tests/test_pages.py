@@ -1,6 +1,6 @@
 from sunspot import app
 
-pages = ['/', '/about', '/application', '/login', '/register', '/bookmarks']
+pages = ['/', '/about', '/search', '/application', '/login', '/register', '/bookmarks']
 
 client = app.test_client()
 
@@ -18,6 +18,16 @@ def test_about():
 #     r = client.get('/application')
 #     assert b'SunSpot - App' in r.data
 #     assert r.status_code == 200
+
+# def test_search():
+#     r = client.get('/search')
+#     assert b'SunSpot - Search' in r.data
+#     assert r.status_code == 200
+
+def test_application():
+    r = client.get('/application')
+    assert b'SunSpot - Web Application' in r.data
+    assert r.status_code == 200
 
 def test_login():
     r = client.get('/login')

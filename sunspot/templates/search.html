@@ -1,0 +1,93 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- CODE REFERENCE USED:
+    Traversy Media
+-->
+<section class="text-dark p-5 text-center text-sm-start" style="background-color: white">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h1>Application</h1>
+                <p class="lead my-3">
+                    <a href="application">Test Redirect to WebApp</a>
+
+                    <h3 id="text-center">Enter a location: </h3>
+                    <form id="location-form">
+                        <input type="text" id="location-input" class="form-control form-control-lg">
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-block">Search</button>
+                    </form>
+                    <br>
+
+                    <div class="card-block" id="format-address"></div>
+                    <div class="card-block" id="address-data"></div>
+                    <div class="card-block" id="geometry"></div>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    //get user location input into form.
+    var locationForm = document.getElementById('location-form');
+    locationForm.addEventListener('submit', geocode);
+
+    function geocode(e){
+        //stop submission.
+        e.preventDefault();
+        //default test address for Empire State Building.
+        //var location = "20 W 34th St NY";
+
+        var location = document.getElementById('location-input').value;
+        axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+            params: {
+                address: location,
+                key:'AIzaSyDx9BeRyEXjOwbaPxuqYJLdnQMF2u1x36c'
+            }
+        })
+        //error catching.
+        .then(function(response){
+            //logging full responses of locations.
+            console.log(response);
+
+            //1. PROVIDES: formatted address.
+            var formatAddress = response.data.results[0].formatted_address;
+            var formatAddress_out = `
+                <ul class="list-group">
+                    <li class="list-group-item">${formatAddress}</li>
+            `;
+
+            //2. PROVIDES: street# through postalcode data. loop through inherent address data.
+            var addressData = response.data.results[0].address_components;
+            var addressData_out = '<ul class="list-group">';
+            for (var i = 0; i < addressData.length; i++){
+                addressData_out += `
+                    <li class = "list-group-item"><strong>${addressData[i].types[0]}</strong>: ${addressData[i].long_name}</li>
+                `;
+            }
+            addressData_out += '</ul>';
+
+            //3. PROVIDES: lat/long data. geometry data.
+            var lat = response.data.results[0].geometry.location.lat;
+            var lng = response.data.results[0].geometry.location.lng;
+            var geometry_out = `
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
+                    <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
+            `;
+
+            //output data retrieved from geocode to html body div.
+            document.getElementById('format-address').innerHTML = formatAddress_out;
+            document.getElementById('address-data').innerHTML = addressData_out;
+            document.getElementById('geometry').innerHTML = geometry_out;
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+    }
+</script>
+{% endblock %}

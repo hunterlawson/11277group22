@@ -66,12 +66,17 @@ def logout():
     logout_user()
     return render_template('home.html', title='SunSpot - Home')
 
-@app.route('/application')
+@app.route('/search')
 @login_required
-def application():
-    return render_template('application.html', title='SunSpot - App')
+def search():
+    return render_template('search.html', title='SunSpot - Search')
 
 @app.route('/bookmarks')
 @login_required
 def bookmarks():
     return render_template('bookmarks.html', title='SunSpot - Bookmarks')
+
+@app.route('/application')
+def application():
+    return render_template('application.html', title='SunSpot - Web Application')
+
