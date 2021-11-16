@@ -19,6 +19,7 @@ def login():
         email = form.email.data
         
         # Get the user from the DB with the entered email address
+        # test
         email_users = User.objects(email=email)
         password_match = False
         for email_user in email_users:
