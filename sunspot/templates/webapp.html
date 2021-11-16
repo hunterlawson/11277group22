@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Set-Up for (1) Location Searchbar, (2) Map, (3) Geo-Data -->
+    <div class="main-container">
+        <div class="row">
+            <div class="col">
+                <input id="search" class="form-control" type="text" placeholder="Search for a new location..." />
+                <input type="hidden" id="latitude_in" />
+                <input type="hidden" id="longitude_in" />
+            </div>
+        </div>
+    <div class="row">
+        <div class="col">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ul class="geodata">
+                <li>Latitude: <span id="lat"></span></li>
+                <li>Longitude: <span id="lng"></span></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+ 
+ <!-- API Script for Google Map -->
+    <script>
+        var map;
+        
+        // Initialize Google Map function.
+        function initMap () {
+            // Setting default values to UF coordinates.
+            var options = {
+                center: { lat: 29.643, lng: -82.354 },
+                zoom: 14
+            };
+
+            // Ask user for geolocation.
+            map = new google.maps.Map(document.getElementById('map'), options);
+
+            infowindow = new google.maps.InfoWindow;
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(function(pos){
+                    var position = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    };
+                    infowindow.setPosition(position);
+                    infowindow.setContent('Current location.');
+                    infowindow.open(map);
+                }, function(){
+                    handleLocationError('Geolocation failure.', map.center());
+                })
+            }
+            else {
+                handleLocationError('No valid geolocation found.', map.center());
+            }
+
+            // Set input to equal user search text.
+            var input = document.getElementById('search');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+            });
+
+            var markers = [];
+            searchBox.addListener('places_changed', function () {
+                var places = searchBox.getPlaces();
+
+                // For geolocation data.
+                //document.getElementById('latitude_in').value = places.geometry.location.lat();
+                //document.getElementById('longitude_in').value = places.geometry.location.lng();
+                //document.getElementById('lat').innerHTML = places.geometry.location.lat();
+                //document.getElementById('lng').innerHTML = places.geometry.location.lng();
+
+                // If input isn't a valid place.
+                if (places.length == 0){
+                    return;
+                }
+                // Reset marker.
+                markers.forEach(function (m) { m.setMap(null); });
+                markers = [];
+
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(p) {
+                    if (!p.geometry){
+                        return;
+                    }
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        title: p.name,
+                        position: p.geometry.location
+                    }));
+
+                    if (p.geometry.viewport){
+                        bounds.union(p.geometry.viewport);
+                    }
+                    else {
+                        bounds.extend(p.geometry.location);
+                    }
+                });
+                // Update bounds to map.
+                map.fitBounds(bounds);
+            });
+        } 
+        
+        // Asking user for geolocation.
+        function handleLocationError(content, position) {
+            infowindow.setPosition(position);
+            infowindow.setContent(content);
+            infowindow.open(map);
+        }
+    </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDx9BeRyEXjOwbaPxuqYJLdnQMF2u1x36c&callback=initMap&libraries=places" async defer></script>
+
+<style>
+    #map {
+        height: 700px;
+        width: 1890px;
+        margin: 0;
+        padding: 0;
+    }
+    html, body {
+        height: 100%;
+    }
+</style>
+</body>
+</html>
+
+
+
+
