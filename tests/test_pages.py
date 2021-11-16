@@ -14,16 +14,15 @@ def test_about():
     assert b'SunSpot - About' in r.data
     assert r.status_code == 200
 
-def test_application():
-    r = client.get('/application')
-    assert b'SunSpot - Web Application' in r.data
-    assert r.status_code == 200
-
 def test_search():
     r = client.get('/search')
     assert b'SunSpot - Search' in r.data
     assert r.status_code == 200
 
+def test_application():
+    r = client.get('/application')
+    assert b'SunSpot - Web Application' in r.data
+    assert r.status_code == 200
 
 def test_login():
     r = client.get('/login')
