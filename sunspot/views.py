@@ -67,7 +67,10 @@ def logout():
     return render_template('home.html', title='SunSpot - Home')
 
 @app.route('/search')
+<<<<<<< HEAD
 @login_required
+=======
+>>>>>>> 09d04c7 (geocode + updated tests and views.)
 def search():
     return render_template('search.html', title='SunSpot - Search')
 
