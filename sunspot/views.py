@@ -75,3 +75,7 @@ def application():
 @login_required
 def bookmarks():
     return render_template('bookmarks.html', title='SunSpot - Bookmarks')
+
+@app.route('/webapp')
+def webapp():
+    return render_template('webapp.html', title='SunSpot - Web Application')
