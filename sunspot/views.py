@@ -1,7 +1,8 @@
 from flask import render_template, url_for, flash, redirect
 from sunspot import app, bcrypt
 from sunspot.forms import RegistrationForm, LoginForm
-from sunspot.models import User, Bookmark
+from sunspot.models import User, Bookmark, DoesNotExist, NotUniqueError
+from flask_login import login_user, login_required, current_user, logout_user
 
 @app.route('/')
 def home():
@@ -17,18 +18,23 @@ def login():
     if form.validate_on_submit():
         password = form.password.data
         email = form.email.data
+        successful_login = False
         
-        # Get the user from the DB with the entered email address
-        # test
-        email_users = User.objects(email=email)
-        password_match = False
-        for email_user in email_users:
-            if email_user != None:
-                password_match = bcrypt.check_password_hash(email_user.password, password)
-            elif password_match == False:
-                flash('Invalid username or password')
-                return render_template('login.html', title='SunSpot - Login', form=form)
+        # Check if there is a user with the entered email address
+        try:
+            user = User.objects.get(email=email)
+        except DoesNotExist:
+            flash('Invalid username or password', 'warning')
+            return render_template('login.html', title='SunSpot - Login', form=form)
         
+        # Check if the password matches
+        if bcrypt.check_password_hash(user.password, password) == False:
+            flash('Invalid username or password', 'warning')
+            return render_template('login.html', title='SunSpot - Login', form=form)
+        
+        # Login successful
+        login_user(user, remember=form.remember.data)
+        flash('Logged in successfully!', 'success')
         return redirect(url_for('home'))
         
     return render_template('login.html', title='SunSpot - Login', form=form)
@@ -39,16 +45,33 @@ def register():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(email=form.email.data, username=form.username.data, password=hashed_password)
-        user.save()
+        
+        try:
+            user.save()
+        except NotUniqueError:
+            flash(f'Account already exists with email: {form.email.data}', 'danger')
+            return render_template('register.html', title='SunSpot - Register', form=form)
+        except:
+            flash('An error occurred when creating your account', 'danger')
+            return render_template('register.html', title='SunSpot - Register', form=form)
+        
         flash(f'Account created for {form.username.data}', 'success')
         return redirect(url_for('login'))
     
     return render_template('register.html', title='SunSpot - Register', form=form)
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return render_template('home.html', title='SunSpot - Home')
+
 @app.route('/application')
+@login_required
 def application():
     return render_template('application.html', title='SunSpot - App')
 
 @app.route('/bookmarks')
+@login_required
 def bookmarks():
     return render_template('bookmarks.html', title='SunSpot - Bookmarks')
