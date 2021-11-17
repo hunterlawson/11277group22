@@ -77,7 +77,14 @@ def search():
 def bookmarks():
     bookmarks=current_user.bookmarks
     bkmklen=len(bookmarks)
-    if request.form.get("delete"):
+    if request.form.get("append"):
+        user = User.objects.get(email=current_user.email)
+        bookmark = Bookmark()
+        bookmark.location={"lat":123,"long":234}
+        user.bookmarks.append(bookmark)
+        user.save()
+        return redirect(url_for('bookmarks'))
+    elif request.form.get("delete"):
         user = User.objects.get(email=current_user.email)
         user.bookmarks.pop()
         user.save()
