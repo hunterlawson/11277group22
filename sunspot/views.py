@@ -98,3 +98,22 @@ def api():
     r = requests.get(base_url, params=params)
 
     return r.json()
+
+@app.route('/addbookmark', methods=['GET'])
+@login_required
+def add_bookmark():
+    latitude = request.args.get('latitude', type=float)
+    longitude = request.args.get('longitude', type=float)
+    print(request.url)
+    
+    print(latitude, longitude)
+    
+    location = {
+        'latitude': latitude,
+        'longitude': longitude
+    }
+    bookmark = Bookmark(location=location)
+    current_user.bookmarks.append(bookmark)
+    current_user.save()
+    
+    return '200'

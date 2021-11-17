@@ -122,17 +122,22 @@ function initMap() {
             //PROVIDES: lat/long data. geometry data.
             var lat = response.data.results[0].geometry.location.lat;
             var lng = response.data.results[0].geometry.location.lng;
-            //console.log(lat);
-            console.log(lng);
+
             var geometry_out = `
             <ul class="list-group">
-                <li class="list-group-item"><strong>Latitude</strong>: ${lat}</li>
-                <li class="list-group-item"><strong>Longitude</strong>: ${lng}</li>
+                <li class="list-group-item"><strong>Latitude</strong>: <span id="lat">${lat}</span></li>
+                <li class="list-group-item"><strong>Longitude</strong>: <span id="lng">${lng}</span></li>
+            `;
+
+            var bookmark_button = `
+            <button onclick="addBookmark()">Save bookmark</button>
             `;
 
             //output data retrieved from geocode to html body div.
             document.getElementById('format-address').innerHTML = formatAddress_out;
             document.getElementById('geometry').innerHTML = geometry_out;
+
+            document.getElementById('bookmark').innerHTML = bookmark_button;
             
             // Get the solar api data
             let baseUrl = '/api';
