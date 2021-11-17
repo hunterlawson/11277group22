@@ -87,6 +87,7 @@ def api():
     latitude = request.args.get('latitude', type=float)
     longitude = request.args.get('longitude', type=float)
 
+    # Solar data
     base_url = 'https://developer.nrel.gov/api/solar/solar_resource/v1'
     params = {
         'format': 'json',
