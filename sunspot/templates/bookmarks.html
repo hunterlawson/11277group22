@@ -33,9 +33,6 @@
                 <h1>Bookmarks</h1>
             </div>
         </div>
-        <form action="" method="post">
-            <button type="submit" name="append" value="submit_a">add a record</button>
-        </form>
         {% if len==0%}
             <p style="color: black;text-align: center;
             font-size: x-large;">You have no bookmarks</p>
@@ -50,7 +47,7 @@
                     <br>
                     <form action="" method="post">
                         <button class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" 
-                        title="delete" name="delete" type="submit" value={{x.date}}></button>
+                        title="delete" name="{{loop.index0}}" type="submit" value={{x.date}}></button>
                     </form>
                 </div>
             {%endfor%}

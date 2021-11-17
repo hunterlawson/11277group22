@@ -77,18 +77,12 @@ def search():
 def bookmarks():
     bookmarks=current_user.bookmarks
     bkmklen=len(bookmarks)
-    if request.form.get("append"):
-        user = User.objects.get(email=current_user.email)
-        bookmark = Bookmark()
-        bookmark.location={"lat":123,"long":234}
-        user.bookmarks.append(bookmark)
-        user.save()
-        return redirect(url_for('bookmarks'))
-    elif request.form.get("delete"):
-        user = User.objects.get(email=current_user.email)
-        user.bookmarks.pop()
-        user.save()
-        return redirect(url_for('bookmarks'))
+    user = User.objects.get(email=current_user.email)
+    for index,x in enumerate(user.bookmarks):
+        if request.form.get(str(index)):
+            del user.bookmarks[index]
+            user.save()
+            return redirect(url_for('bookmarks'))
     return render_template('bookmarks.html', title='SunSpot - Bookmarks',bookmarks=bookmarks,len=bkmklen)
 
 
