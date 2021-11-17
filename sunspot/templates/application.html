@@ -21,11 +21,19 @@
             </div>
         </div>
         <div class="row">
+            <div class="col" id="format-address"></div>
+        </div>
+        <div class="row">
             <div class="col" id="geometry">
                 <!--<ul class="geodata">
                     <li>Latitude: <span id="lat_out"></span></li>
                     <li>Longitude: <span id="lng_out"></span></li>
                 </ul>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="openweather">
+                
             </div>
         </div>
     </div>
@@ -147,6 +155,13 @@
                     //logging full responses of locations.
                     console.log(response);
 
+                    //1. PROVIDES: formatted address.
+                    var formatAddress = response.data.results[0].formatted_address;
+                    var formatAddress_out = `
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Place</strong>: ${formatAddress}</li>
+                    `;
+
                     //PROVIDES: lat/long data. geometry data.
                     var lat = response.data.results[0].geometry.location.lat;
                     var lng = response.data.results[0].geometry.location.lng;
@@ -159,6 +174,7 @@
                     `;
 
                     //output data retrieved from geocode to html body div.
+                    document.getElementById('format-address').innerHTML = formatAddress_out;
                     document.getElementById('geometry').innerHTML = geometry_out;
                     
                     // Get the solcast api data
