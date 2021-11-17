@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 {% block content %}
 <style>
@@ -32,59 +33,25 @@
                 <h1>Bookmarks</h1>
             </div>
         </div>
+        {% if len==0%}
+            <p style="color: black;text-align: center;
+            font-size: x-large;">You have no bookmarks</p>
+        {%endif%}
         <div class="frame">
-            <div class="card">
-                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
-            style="border-radius: 7px;">
-                <h1>Bookmark1</h1>
-                <h2>location</h2>
-                <h2>position</h2>
-                <h2>cost</h2>
-                <br>
-                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
-            </div>
-            <div class="card">
-                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
-                style="border-radius: 7px;">
-                <h1>Bookmark2</h1>
-                <h2>location</h2>
-                <h2>position</h2>
-                <h2>cost</h2>
-                <br>
-                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
-            </div>
-            <div class="card">
-                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
-                style="border-radius: 7px;">
-                <h1>Bookmark3</h1>
-                <h2>location</h2>
-                <h2>position</h2>
-                <h2>cost</h2>
-                <br>
-                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
-            </div>
-            <div class="card">
-                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
-                style="border-radius: 7px;">
-                <h1>Bookmark4</h1>
-                <h2>location</h2>
-                <h2>position</h2>
-                <h2>cost</h2>
-                <br>
-                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
-            </div>
-            <div class="card">
-                <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
-                style="border-radius: 7px;">
-                <h1>Bookmark5</h1>
-                <h2>location</h2>
-                <h2>position</h2>
-                <h2>cost</h2>
-                <br>
-                <i class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" title="delete"></i>
-            </div>
+            {% for x in bookmarks%}
+                <div class="card">
+                    <img src="https://otbsalessolutions.com/wp-content/uploads/2021/08/Farmer-standing-in-field.jpg"
+                    style="border-radius: 7px;">
+                    <h1>Bookmark{{loop.index}}</h1>
+                    <h5>Latitude: {{x.location["lat"]}}, Longitude: {{x.location["long"]}}</h5>
+                    <br>
+                    <form action="" method="post">
+                        <button class="fa fa-trash" style="position: absolute;bottom: 8px;right: 10px;" 
+                        title="delete" name="delete" type="submit" value={{x.date}}></button>
+                    </form>
+                </div>
+            {%endfor%}
         </div>
     </div>
 </section>
-
 {% endblock %}

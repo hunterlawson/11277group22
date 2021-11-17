@@ -72,10 +72,18 @@ def logout():
 def search():
     return render_template('search.html', title='SunSpot - Search')
 
-@app.route('/bookmarks')
+@app.route('/bookmarks',methods=['POST','GET'])
 @login_required
 def bookmarks():
-    return render_template('bookmarks.html', title='SunSpot - Bookmarks')
+    bookmarks=current_user.bookmarks
+    bkmklen=len(bookmarks)
+    if request.form.get("delete"):
+        user = User.objects.get(email=current_user.email)
+        user.bookmarks.pop()
+        user.save()
+        return redirect(url_for('bookmarks'))
+    return render_template('bookmarks.html', title='SunSpot - Bookmarks',bookmarks=bookmarks,len=bkmklen)
+
 
 @app.route('/application')
 def application():
