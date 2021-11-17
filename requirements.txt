@@ -5,3 +5,4 @@ email_validator
 mongoengine
 flask-bcrypt
 flask-login
+requests

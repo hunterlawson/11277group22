@@ -1,8 +1,9 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from sunspot import app, bcrypt
 from sunspot.forms import RegistrationForm, LoginForm
 from sunspot.models import User, Bookmark, DoesNotExist, NotUniqueError
 from flask_login import login_user, login_required, current_user, logout_user
+import requests
 
 @app.route('/')
 def home():
@@ -80,3 +81,19 @@ def bookmarks():
 def application():
     return render_template('application.html', title='SunSpot - Web Application')
 
+@app.route('/api')
+@login_required
+def api():
+    latitude = request.args.get('latitude', type=float)
+    longitude = request.args.get('longitude', type=float)
+
+    base_url = 'https://developer.nrel.gov/api/solar/solar_resource/v1'
+    params = {
+        'format': 'json',
+        'api_key': app.config['SOLAR_API_KEY'],
+        'lat': latitude,
+        'lon': longitude
+    }
+    r = requests.get(base_url, params=params)
+
+    return r.json()
